@@ -1,0 +1,30 @@
+version: "3.7"
+services:
+  vanilla-php:
+    build:
+      context: .
+    container_name: vanilla-php
+    restart: always
+    tty: true
+    volumes:
+      - "./html/:/var/www/html/"
+      - "./config/php/xdebug-local.ini:/usr/local/etc/php/conf.d/xdebug-local.ini"
+      - "./config/apache/vhost.conf:/etc/apache2/sites-available/000-default.conf"
+    ports:
+      - 80:80
+
+  vanilla-php-db:
+    image: mysql:8.0
+    container_name: vanilla-php-db
+    environment:
+      MYSQL_DATABASE: 'app'
+      MYSQL_ROOT_PASSWORD: 'root'
+    command: --default-authentication-plugin=mysql_native_password
+    ports:
+      - '3306:3306'
+    expose:
+      - '3306'
+    volumes:
+      - vanilla-php-db:/var/lib/mysql
+volumes:
+  vanilla-php-db:
