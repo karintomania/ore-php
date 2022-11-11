@@ -30,7 +30,7 @@
 # アーキテクチャ
 - Service
 	+ Repositoryからデータを取得
-	+ Viewにデータを突っ込む
+	+ Viewにデータを突っ込んで返す
 - Repository
 	+ DBアクセスを担当
 - View
