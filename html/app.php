@@ -1,15 +1,16 @@
 <?php
 
-spl_autoload_register(function ($class) {
-    include  str_replace("\\", "/", $class) . '.php';
-});
-
 class App{
 
 	private array $resolveMap;
 
 
 	function __construct(){
+
+		// register autload function
+		spl_autoload_register(function ($class) {
+			include  str_replace("\\", "/", $class) . '.php';
+		});
 
 		$this->resolveMap = [
 			// IndexService::class => function(App $app) {
