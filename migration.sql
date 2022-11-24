@@ -1,0 +1,19 @@
+DROP TABLE IF EXISTS threads;
+CREATE TABLE threads (
+	id int NOT NULL AUTO_INCREMENT,
+	name varchar(100) NOT NULL,
+	createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id)
+);
+
+DROP TABLE IF EXISTS responses;
+CREATE TABLE responses (
+	id int NOT NULL AUTO_INCREMENT,
+	threadId int NOT NULL,
+	userName varchar(100) NOT NULL,
+	content varchar(1000) NOT NULL,
+	createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (id),
+	FOREIGN KEY (id) REFERENCES threads(id)
+);
+
