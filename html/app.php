@@ -12,13 +12,7 @@ class App{
 			include  str_replace("\\", "/", $class) . '.php';
 		});
 
-		$this->resolveMap = [
-			// IndexService::class => function(App $app) {
-			// 	$tr = $app->resolve(ThreadRepository::class);
-			// 	var_dump('resolver');
-			// 	return new IndexService($tr);
-			// }
-		];
+		$this->resolveMap = include 'resolveMap.php';
 	}
 
 	function resolve(string $className){
