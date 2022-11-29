@@ -1,5 +1,7 @@
 <?php
 
+$_ENV['DB_NAME'] = 'test';
+
 runTests($argv);
 
 function runTests($argv){
