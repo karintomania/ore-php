@@ -14,8 +14,14 @@ class ThreadRepository{
 
 		return $stmt->fetch();
 	}
-	function findAll(){
+
+	function findAll(): array{
+		$stmt = $this->pdo->query('SELECT * FROM threads');
+		$stmt->execute();
+
+		return $stmt->fetchAll();
 	}
+
 	function create(string $name): int{
 		$stmt = $this->pdo->prepare('
 			INSERT INTO threads (name)
