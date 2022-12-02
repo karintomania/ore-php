@@ -38,6 +38,26 @@ class ResponseRepository{
 		return $this->pdo->lastInsertId();
 	}
 
+	/**
+	 * @return Response[]
+	 */
+	function findByThread(int $threadId):array {
+
+		$stmt = $this->pdo->prepare('
+			SELECT * FROM responses
+			WHERE threadId = :threadId
+		');
+		$stmt->execute(['threadId' => $threadId]);
+
+		$responseAry = $stmt->fetchAll();
+
+		$responses = array_map(
+			fn($ary) => $this->arrayToResponse($ary),
+			$responseAry);
+		return $responses;
+
+	}
+
 	private function arrayToResponse(array $array): Response{
 		return new Response(
 			id:       $array['id'],
@@ -47,6 +67,7 @@ class ResponseRepository{
 			createdAt: new DateTimeImmutable($array['createdAt']),
 		);
 	}
+
 }
 
 ?>

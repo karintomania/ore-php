@@ -59,26 +59,48 @@ class ResponseRepositoryTest extends Test{
 
 	}
 
-	function test_findByThread_returns_all_responses(){
+	function test_findByThread_returns_all_responses_in_thread(){
 
-		// $this->truncate();
+		$this->truncate();
 
-		// $input = [
-		// 	'test 1',
-		// 	'test 2',
-		// 	'test 3',
-		// ];
+		$threadId = $this->createThread();
+		$threadId2 = $this->createThread();
 
-		// $this->tr->create($input[0]);
-		// $this->tr->create($input[1]);
-		// $this->tr->create($input[2]);
+		$input = [
+			new Response(
+				threadId: $threadId,
+				content: 'content 1',
+				userName: 'name 1'
+			),
+			new Response(
+				threadId: $threadId,
+				content: 'content 2',
+				userName: 'name 2'
+			),
+			new Response(
+				threadId: $threadId,
+				content: 'content 3',
+				userName: 'name 3'
+			),
+			new Response( // insert a response for a different thread
+				threadId: $threadId2,
+				content: 'content 3',
+				userName: 'name 3'
+			),
+		];
 
-		// $responses = $this->tr->findAll();
+		$responseIds = array_map(
+			fn($response) => $this->rr->create($response),
+			$input
+		);
 
-		// $this->assertEquals(3, count($responses));
-		// $this->assertEquals($input[0], $responses[0]['name']);
-		// $this->assertEquals($input[1], $responses[1]['name']);
-		// $this->assertEquals($input[2], $responses[2]['name']);
+
+		$responses = $this->rr->findByThread($threadId);
+
+		$this->assertEquals(count($input) - 1, count($responses));
+		$this->assertEquals($responseIds[0], $responses[0]->id);
+		$this->assertEquals($responseIds[1], $responses[1]->id);
+		$this->assertEquals($responseIds[2], $responses[2]->id);
 	}
 
 	private function createThread(): int{
@@ -86,9 +108,13 @@ class ResponseRepositoryTest extends Test{
 		return $threadId;
 	}
 
+
 	private function truncate(){
 		$this->pdo->exec('SET FOREIGN_KEY_CHECKS=0');
+
 		$this->pdo->exec('TRUNCATE TABLE responses');
+		$this->pdo->exec('TRUNCATE TABLE threads');
+
 		$this->pdo->exec('SET FOREIGN_KEY_CHECKS=1');
 	}
 
