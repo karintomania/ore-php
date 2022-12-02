@@ -23,7 +23,7 @@ class ThreadRepositoryTest extends Test{
 
 		$this->assertEquals($threadId, $thread->id);
 		$this->assertEquals($input->name, $thread->name);
-		$this->assertEquals(date('Y-m-d H:i:s'), $thread->createdAt);
+		$this->assertEquals(date('Y-m-d H:i:s'), $thread->createdAt->format('Y-m-d H:i:s'));
 
 	}
 
@@ -48,8 +48,7 @@ class ThreadRepositoryTest extends Test{
 
 		$this->assertEquals($threadId, $thread->id);
 		$this->assertEquals($input->name, $thread->name);
-		$this->assertEquals(date('Y-m-d H:i:s'), $thread->createdAt);
-
+		$this->assertEquals(date('Y-m-d H:i:s'), $thread->createdAt->format('Y-m-d H:i:s'));
 
 	}
 
