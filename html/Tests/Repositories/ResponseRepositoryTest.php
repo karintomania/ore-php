@@ -7,6 +7,7 @@ use PDO;
 use Repositories\ResponseRepository;
 use Repositories\ThreadRepository;
 use Models\Response;
+use Models\Thread;
 
 class ResponseRepositoryTest extends Test{
 
@@ -104,7 +105,9 @@ class ResponseRepositoryTest extends Test{
 	}
 
 	private function createThread(): int{
-		$threadId = $this->tr->create('test');
+		$threadId = $this->tr->create(
+			new Thread(name: 'test')
+		);
 		return $threadId;
 	}
 
