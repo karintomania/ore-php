@@ -5,6 +5,7 @@ namespace Tests\Repositories;
 use OreFramework\Tests\Test;
 use PDO;
 use Repositories\ThreadRepository;
+use Models\Thread;
 
 class ThreadRepositoryTest extends Test{
 
@@ -14,40 +15,41 @@ class ThreadRepositoryTest extends Test{
 	){}
 
 	function test_create_creates_thread(){
-		$threadName = 'test thread';
+		$input = new Thread(name: 'test thread');
 
-		$threadId = $this->tr->create($threadName);
+		$threadId = $this->tr->create($input);
 
 		$thread = $this->tr->findById($threadId);
 
-		$this->assertEquals($threadId, $thread['id']);
-		$this->assertEquals($threadName, $thread['name']);
-		$this->assertEquals(date('Y-m-d H:i:s'), $thread['createdAt']);
+		$this->assertEquals($threadId, $thread->id);
+		$this->assertEquals($input->name, $thread->name);
+		$this->assertEquals(date('Y-m-d H:i:s'), $thread->createdAt);
 
 	}
 
 	function test_create_creates_thread_with_japanese_name(){
-		$threadName = 'テストスレ';
+		$input = new Thread(name: 'テスト　スレ');
 
-		$threadId = $this->tr->create($threadName);
+		$threadId = $this->tr->create($input);
 
 		$thread = $this->tr->findById($threadId);
 
-		$this->assertEquals($threadId, $thread['id']);
-		$this->assertEquals($threadName, $thread['name']);
+		$this->assertEquals($input->name, $thread->name);
+
 
 	}
 
 	function test_findById_finds_thread(){
-		$threadName = 'test thread';
+		$input = new Thread(name: 'test thread');
 
-		$threadId = $this->tr->create($threadName);
+		$threadId = $this->tr->create($input);
 
 		$thread = $this->tr->findById($threadId);
 
-		$this->assertEquals($threadId, $thread['id']);
-		$this->assertEquals($threadName, $thread['name']);
-		$this->assertEquals(date('Y-m-d H:i:s'), $thread['createdAt']);
+		$this->assertEquals($threadId, $thread->id);
+		$this->assertEquals($input->name, $thread->name);
+		$this->assertEquals(date('Y-m-d H:i:s'), $thread->createdAt);
+
 
 	}
 
@@ -56,20 +58,21 @@ class ThreadRepositoryTest extends Test{
 		$this->truncate();
 
 		$input = [
-			'test 1',
-			'test 2',
-			'test 3',
+			new Thread(name: 'test 1'),
+			new Thread(name: 'test 2'),
+			new Thread(name: 'test 3'),
 		];
-		$this->tr->create($input[0]);
-		$this->tr->create($input[1]);
-		$this->tr->create($input[2]);
+
+		foreach($input as $thread){
+			$this->tr->create($thread);
+		}
 
 		$threads = $this->tr->findAll();
 
 		$this->assertEquals(3, count($threads));
-		$this->assertEquals($input[0], $threads[0]['name']);
-		$this->assertEquals($input[1], $threads[1]['name']);
-		$this->assertEquals($input[2], $threads[2]['name']);
+		$this->assertEquals($input[0]->name, $threads[0]->name);
+		$this->assertEquals($input[1]->name, $threads[1]->name);
+		$this->assertEquals($input[2]->name, $threads[2]->name);
 	}
 
 	private function truncate(){
