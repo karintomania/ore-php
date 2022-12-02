@@ -14,6 +14,6 @@ CREATE TABLE responses (
 	content varchar(1000) NOT NULL,
 	createdAt TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	PRIMARY KEY (id),
-	FOREIGN KEY (id) REFERENCES threads(id)
+	FOREIGN KEY (threadId) REFERENCES threads(id)
 );
 
