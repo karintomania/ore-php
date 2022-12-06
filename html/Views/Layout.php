@@ -11,7 +11,7 @@ class Layout{
 				<head>
 					<title>５１２ちゃんねる</title>
 				</head>
-				<body>
+				<body id="layout-body">
 					{$content}
 				</body>
 			</html>
