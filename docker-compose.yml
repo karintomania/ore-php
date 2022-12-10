@@ -1,11 +1,11 @@
 version: "3.7"
 services:
-  vanilla-php:
+  ore-php:
     build:
       context: .
-    container_name: vanilla-php
+    container_name: ore-php
     environment:
-      DB_HOST: vanilla-php-db
+      DB_HOST: ore-php-db
       DB_NAME: app
       DB_USER: root
       DB_PASSWORD: root
@@ -18,9 +18,9 @@ services:
     ports:
       - 80:80
 
-  vanilla-php-db:
+  ore-php-db:
     image: mysql:8.0
-    container_name: vanilla-php-db
+    container_name: ore-php-db
     environment:
       MYSQL_DATABASE: 'app'
       MYSQL_ROOT_PASSWORD: 'root'
@@ -30,6 +30,6 @@ services:
     expose:
       - '3306'
     volumes:
-      - vanilla-php-db:/var/lib/mysql
+      - ore-php-db:/var/lib/mysql
 volumes:
-  vanilla-php-db:
+  ore-php-db:
