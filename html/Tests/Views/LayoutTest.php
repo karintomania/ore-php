@@ -16,7 +16,7 @@ class LayoutTest extends Test{
 		$content = 'Hello';
 		$html = $this->layout->render($content);
 
-		$this->assertContains($content, $html);
+		$this->assertViewContains($content, $html);
 	}
 
 }
