@@ -40,8 +40,8 @@ class IndexTest extends Test{
 		$html = $this->index->render($input);
 
 		// includes row nums
-		$this->assertViewContains("<div>1</div>", $html);
-		$this->assertViewContains("<div>2</div>", $html);
+		$this->assertViewTagContainsString("1", "div", $html);
+		$this->assertViewTagContainsString("2", "div", $html);
 		// includes thread name
 		$this->assertViewContains($input[0]->name, $html);
 		$this->assertViewContains($input[1]->name, $html);

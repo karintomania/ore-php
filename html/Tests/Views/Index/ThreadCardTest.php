@@ -25,7 +25,7 @@ class ThreadCardTest extends Test{
 
 		$html = $this->threadCard->render($rowNum, $input);
 
-		$this->assertViewContains($rowNum, $html);
+		$this->assertViewTagContainsString($rowNum, 'div', $html);
 		$this->assertViewContains($input->name, $html);
 		$this->assertViewContains(
 			$input->createdAt->format('Y/m/d H:i:s'), $html
