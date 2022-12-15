@@ -40,8 +40,8 @@ class IndexTest extends Test{
 		$html = $this->index->render($input);
 
 		// includes row nums
-		$this->assertViewContains(1, $html);
-		$this->assertViewContains(2, $html);
+		$this->assertViewContains("<div>1</div>", $html);
+		$this->assertViewContains("<div>2</div>", $html);
 		// includes thread name
 		$this->assertViewContains($input[0]->name, $html);
 		$this->assertViewContains($input[1]->name, $html);
@@ -55,6 +55,7 @@ class IndexTest extends Test{
 		);
 		
 		// TODO: add test for layout id (layout-body)
+		$this->assertViewContains("layout-body", $html);
 	}
 
 }
