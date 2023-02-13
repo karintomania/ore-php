@@ -15,7 +15,7 @@ class ThreadCard{
 		$html = <<<HTML
 			<div>
 				<div>{$rowNum}</div>
-				<div>{$thread->name}</div>
+				<a href="/thread.php?id={$thread->id}">{$thread->name}</a>
 				<div>{$thread->createdAt->format('Y/m/d H:i:s')}</div>
 			</div>
 		HTML;
