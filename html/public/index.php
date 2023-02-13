@@ -1,10 +1,14 @@
 <?php
 
-try {
-    $dbh = new PDO('mysql:host=vanilla-php-db;dbname=app', 'root', 'root');
-	print('success');
-} catch (PDOException $e) {
-    print "Error!: " . $e->getMessage() . "<br/>";
-}
+use Models\Thread;
+use Repositories\ThreadRepository;
+use Services\IndexService;
+
+$app = include '../app.php';
+$service = $app->resolve(IndexService::class);
+
+$view = $service->__invoke();
 
 ?>
+
+<?= $view ?>
