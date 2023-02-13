@@ -46,6 +46,14 @@ class IndexTest extends Test{
 		$this->assertViewContains($input[0]->name, $html);
 		$this->assertViewContains($input[1]->name, $html);
 
+		// include thread link
+		$this->assertViewContains(
+			"/thread.php?id={$input[0]->id}", $html
+		);
+		$this->assertViewContains(
+			"/thread.php?id={$input[1]->id}", $html
+		);
+
 		// includes date time
 		$this->assertViewContains(
 			$input[0]->createdAt->format('Y/m/d H:i:s'), $html
