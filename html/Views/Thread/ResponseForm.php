@@ -18,6 +18,9 @@ class ResponseForm{
 					<div>
 						<label>内容：</label><input type="text" name="content">
 					</div>
+					<div>
+						<input type="submit" value="送る">
+					</div>
 				</form>
 			</div>
 		HTML;

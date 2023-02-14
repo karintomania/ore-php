@@ -26,6 +26,8 @@ class ResponseFormTest extends Test{
 
 		$this->assertViewContains('name="content"', $html);
 		$this->assertViewContains('name="threadId"', $html);
+
+		$this->assertViewContains('type="submit"', $html);
 	}
 
 }
