@@ -63,6 +63,10 @@ class ThreadMainTest extends Test{
 		$this->assertViewContains(
 			$responses[1]->createdAt->format('Y/m/d H:i:s'), $html
 		);
+
+		// test response form
+		$this->assertViewContainsId('response-form', $html);
+		$this->assertViewContains('value="'.$thread->id.'"', $html);
 	}
 
 }

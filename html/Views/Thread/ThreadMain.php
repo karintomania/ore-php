@@ -12,6 +12,7 @@ class ThreadMain{
 	function __construct(
 		private Layout $layout,
 		private ResponseList $responseList,
+		private ResponseForm $responseForm
 	){}
 
 	/**
@@ -24,11 +25,13 @@ class ThreadMain{
 		TITLE;
 
 		$responseList = $this->responseList->render($responses);
+		$responseForm = $this->responseForm->render($thread->id);
 
 		$html = <<<HTML
 			<div>
 				{$threadTitle}
 				{$responseList}
+				{$responseForm}
 			</div>
 		HTML;
 
