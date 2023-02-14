@@ -21,6 +21,9 @@ class ThreadMain{
 	function render(Thread $thread, array $responses): string{
 
 		$threadTitle = <<<TITLE
+			<div>
+				<a href="/">←もどる</a>
+			</div>
 			<h1>{$thread->name}</h1>
 		TITLE;
 

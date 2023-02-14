@@ -46,7 +46,9 @@ class ThreadMainTest extends Test{
 
 		$this->assertViewContains("layout-body", $html);
 
+		// test title
 		$this->assertViewContains($thread->name, $html);
+		$this->assertViewContains('href="/"', $html);
 
 		$this->assertViewTagContainsString(1, 'div', $html);
 		$this->assertViewContainsId('response-1', $html);
