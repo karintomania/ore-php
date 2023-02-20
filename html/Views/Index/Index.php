@@ -2,6 +2,7 @@
 
 namespace Views\Index;
 
+use Config;
 use Models\Thread;
 use Views\Layout;
 
@@ -10,6 +11,7 @@ class Index{
 	function __construct(
 		private Layout $layout,
 		private ThreadCard $threadCard,
+		private Config $config,
 	){}
 
 	/**
@@ -31,6 +33,9 @@ class Index{
 		$html = <<<HTML
 			<div>
 				{$threadHtml}
+				<div>
+					<a href="{$this->config::URLS['CREATE_THREAD']}">スレを立てる</a>
+				</div>
 			</div>
 		HTML;
 

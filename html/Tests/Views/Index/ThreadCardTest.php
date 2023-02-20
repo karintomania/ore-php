@@ -2,6 +2,7 @@
 
 namespace Tests\Views\Index;
 
+use Config;
 use DateTimeImmutable;
 use Models\Thread;
 use OreFramework\Tests\Test;
@@ -12,7 +13,10 @@ class ThreadCardTest extends Test{
 
 	use ViewTest;
 
-	function __construct(private ThreadCard $threadCard){}
+	function __construct(
+		private ThreadCard $threadCard,
+		private Config $config,
+	){}
 
 	function test_render_renders_thread_card(){
 
@@ -28,7 +32,7 @@ class ThreadCardTest extends Test{
 		$this->assertViewTagContainsString($rowNum, 'div', $html);
 		$this->assertViewTagContainsString($input->name, 'a', $html);
 		$this->assertViewContains(
-			"/thread.php?id={$input->id}", $html
+			$this->config::URLS['THREAD'] . "?id={$input->id}", $html
 		);
 		$this->assertViewContains(
 			$input->createdAt->format('Y/m/d H:i:s'), $html

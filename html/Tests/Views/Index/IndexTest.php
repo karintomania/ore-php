@@ -2,6 +2,7 @@
 
 namespace Tests\Views\Index;
 
+use Config;
 use DateInterval;
 use DateTimeImmutable;
 use Models\Thread;
@@ -18,7 +19,8 @@ class IndexTest extends Test{
 	function __construct(
 		private ThreadCard $threadCard,
 		private Index $index,
-		private Layout $layout
+		private Layout $layout,
+		private Config $config,
 	){}
 
 	function test_render_renders_thread_card(){
@@ -48,10 +50,10 @@ class IndexTest extends Test{
 
 		// include thread link
 		$this->assertViewContains(
-			"/thread.php?id={$input[0]->id}", $html
+			$this->config::URLS['THREAD'] . "?id={$input[0]->id}", $html
 		);
 		$this->assertViewContains(
-			"/thread.php?id={$input[1]->id}", $html
+			$this->config::URLS['THREAD'] . "?id={$input[1]->id}", $html
 		);
 
 		// includes date time
@@ -62,8 +64,11 @@ class IndexTest extends Test{
 			$input[1]->createdAt->format('Y/m/d H:i:s'), $html
 		);
 		
-		// TODO: add test for layout id (layout-body)
+		// includes layout
 		$this->assertViewContains("layout-body", $html);
+
+		// includes the link to /createThread
+		$this->assertViewContains('href="' . $this->config::URLS['CREATE_THREAD'] . '"', $html);
 	}
 
 }

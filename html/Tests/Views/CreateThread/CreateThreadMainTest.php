@@ -2,6 +2,7 @@
 
 namespace Tests\Views\CreateThread;
 
+use Config;
 use OreFramework\Tests\Test;
 use OreFramework\Tests\ViewTest;
 use Views\CreateThread\CreateThreadMain;
@@ -12,6 +13,7 @@ class CreateThreadMainTest extends Test{
 
 	function __construct(
 		private CreateThreadMain $view,
+		private Config $config,
 	){}
 
 	function test_render_renders_main(){
@@ -21,7 +23,7 @@ class CreateThreadMainTest extends Test{
 		$this->assertViewContainsId('thread-form', $html);
 
 		// includes form to StoreThread
-		$this->assertViewContains('action="/storeThread.php"', $html);
+		$this->assertViewContains('action="'. $this->config::URLS['STORE_THREAD'] . '"', $html);
 		$this->assertViewContains('method="POST"', $html);
 
 		// include forms
