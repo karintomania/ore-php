@@ -10,6 +10,8 @@ use Services\StoreResponseService;
 
 class StoreResponseServiceTest extends Test{
 
+	private int $threadId;
+
 	function __construct(
 		private StoreResponseService $srs,
 		private ThreadRepository $tr,
@@ -19,18 +21,19 @@ class StoreResponseServiceTest extends Test{
 	function test_StoreResponseService_stores_response(){
 
 		$inputThread = new Thread(name: 'thread 1');
-		$threadId = $this->tr->create($inputThread);
-		$thread = $this->tr->findById($threadId);
+		$this->threadId = $this->tr->create($inputThread);
+		$thread = $this->tr->findById($this->threadId);
 
 		$input = [
-			'threadId' => $threadId,
+			'threadId' => $this->threadId,
 			'content' => 'content',
 			'userName' => 'userName',
 		];
 
-		$html = $this->srs->__invoke($input);
+		$result = $this->srs->__invoke($input);
 
-		$responses = $this->rr->findByThread($threadId);
+		$this->assertEquals($result['success'], true);
+		$responses = $this->rr->findByThread($this->threadId);
 
 		$this->assertEquals(1, count($responses));
 
@@ -41,6 +44,31 @@ class StoreResponseServiceTest extends Test{
 
 	}
 
+	function test_StoreResponseService_validates_empty_content(){
+
+		$input = [
+			'threadId' => $this->threadId,
+			'content' => '',
+			'userName' => 'userName',
+		];
+
+		$result = $this->srs->__invoke($input);
+		$this->assertEquals(false, $result['success']);
+
+	}
+
+	function test_StoreResponseService_validates_empty_name(){
+
+		$input = [
+			'threadId' => $this->threadId,
+			'content' => 'test content',
+			'userName' => '',
+		];
+
+		$result = $this->srs->__invoke($input);
+		$this->assertEquals(false, $result['success']);
+
+	}
 }
 
 
