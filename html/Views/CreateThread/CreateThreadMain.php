@@ -2,12 +2,14 @@
 
 namespace Views\CreateThread;
 
+use Config;
 use Views\Layout;
 
 class CreateThreadMain{
 
 	function __construct(
 		private Layout $layout,
+		private Config $config
 	){}
 
 	/**
@@ -18,7 +20,7 @@ class CreateThreadMain{
 		$html = <<<HTML
 			<div>
 				<h3>スレを作る</h3>
-				<form id="thread-form" action="/storeThread.php" method="POST">
+				<form id="thread-form" action="{$this->config::URLS['STORE_THREAD']}" method="POST">
 					<div>
 						<label>スレタイトル：</label><input type="text" name="name">
 					</div>

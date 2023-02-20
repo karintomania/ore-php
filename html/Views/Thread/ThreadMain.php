@@ -2,6 +2,7 @@
 
 namespace Views\Thread;
 
+use Config;
 use Models\Response;
 use Models\Thread;
 use Views\Layout;
@@ -12,7 +13,8 @@ class ThreadMain{
 	function __construct(
 		private Layout $layout,
 		private ResponseList $responseList,
-		private ResponseForm $responseForm
+		private ResponseForm $responseForm,
+		private Config $config
 	){}
 
 	/**
@@ -22,7 +24,7 @@ class ThreadMain{
 
 		$threadTitle = <<<TITLE
 			<div>
-				<a href="/">←もどる</a>
+				<a href="{$this->config::URLS['INDEX']}">←もどる</a>
 			</div>
 			<h1>{$thread->name}</h1>
 		TITLE;
