@@ -2,7 +2,9 @@
 
 namespace Services;
 
+use Config;
 use Models\Response;
+use OreFramework\Validation\ErrorManager;
 use Repositories\ResponseRepository;
 
 class StoreResponseService{
@@ -10,6 +12,8 @@ class StoreResponseService{
 
 	function __construct(
 		private ResponseRepository $rr,
+		private ErrorManager $em,
+		private Config $config,
 	){}
 
 	function __invoke(array $request){
@@ -37,9 +41,19 @@ class StoreResponseService{
 			return false;
 		}
 		if(!$request['userName']){
+			$this->em->register(
+				'name',
+				$this->config::RESPONSE_FORM['USER_NAME_ERROR_MESSAGE'],
+				$request,
+			);
 			return false;
 		}
 		if(!$request['content']){
+			$this->em->register(
+				'content',
+				$this->config::RESPONSE_FORM['CONTENT_ERROR_MESSAGE'],
+				$request,
+			);
 			return false;
 		}
 

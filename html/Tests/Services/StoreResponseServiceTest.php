@@ -2,8 +2,10 @@
 
 namespace Tests\Services;
 
+use Config;
 use Models\Thread;
 use OreFramework\Tests\Test;
+use OreFramework\Validation\ErrorManager;
 use Repositories\ResponseRepository;
 use Repositories\ThreadRepository;
 use Services\StoreResponseService;
@@ -16,6 +18,8 @@ class StoreResponseServiceTest extends Test{
 		private StoreResponseService $srs,
 		private ThreadRepository $tr,
 		private ResponseRepository $rr,
+		private ErrorManager $em,
+		private Config $config,
 	){}
 
 	function test_StoreResponseService_stores_response(){
@@ -55,6 +59,11 @@ class StoreResponseServiceTest extends Test{
 		$result = $this->srs->__invoke($input);
 		$this->assertEquals(false, $result['success']);
 
+		$error = $this->em->get('content');
+		$this->assertEquals($this->config::RESPONSE_FORM['CONTENT_ERROR_MESSAGE'], $error['message']);
+		$this->assertEquals($input['threadId'], $error['form']['threadId']);
+		$this->assertEquals($input['userName'], $error['form']['userName']);
+
 	}
 
 	function test_StoreResponseService_validates_empty_name(){
@@ -68,6 +77,10 @@ class StoreResponseServiceTest extends Test{
 		$result = $this->srs->__invoke($input);
 		$this->assertEquals(false, $result['success']);
 
+		$error = $this->em->get('name');
+		$this->assertEquals($this->config::RESPONSE_FORM['USER_NAME_ERROR_MESSAGE'], $error['message']);
+		$this->assertEquals($input['threadId'], $error['form']['threadId']);
+		$this->assertEquals($input['content'], $error['form']['content']);
 	}
 }
 
